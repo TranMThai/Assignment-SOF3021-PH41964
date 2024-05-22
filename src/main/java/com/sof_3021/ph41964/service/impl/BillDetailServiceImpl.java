@@ -2,15 +2,29 @@ package com.sof_3021.ph41964.service.impl;
 
 import com.sof_3021.ph41964.entity.BillDetail;
 import com.sof_3021.ph41964.service.BillDetailService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillDetailImpl implements BillDetailService {
+@Service
+public class BillDetailServiceImpl implements BillDetailService {
 
     private final List<BillDetail> list = new ArrayList<>();
 
-    public BillDetailImpl() {
+    public BillDetailServiceImpl() {
+        list.add(new BillDetail(1,1,1,1,true));
+        list.add(new BillDetail(2,1,2,2,true));
+
+        list.add(new BillDetail(3,2,5,4,true));
+
+        list.add(new BillDetail(4,3,3,3,true));
+
+        list.add(new BillDetail(5,4,7,1,true));
+        list.add(new BillDetail(6,4,8,1,true));
+
+        list.add(new BillDetail(7,5,12,2,true));
+        list.add(new BillDetail(8,5,11,1,true));
     }
 
     @Override

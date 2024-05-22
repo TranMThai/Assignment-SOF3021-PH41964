@@ -1,15 +1,24 @@
 package com.sof_3021.ph41964.service.impl;
 
+import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.service.BillService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class HoaDonImpl implements BillService {
+@Service
+public class BillServiceImpl implements BillService {
 
-    private final List<com.sof_3021.ph41964.entity.Bill> list = new ArrayList<>();
+    private final List<Bill> list = new ArrayList<>();
 
-    public HoaDonImpl() {
+    public BillServiceImpl() {
+        list.add(new Bill(1,1,1,new Date(),true));
+        list.add(new Bill(2,1,2,new Date(),true));
+        list.add(new Bill(3,1,3,new Date(),true));
+        list.add(new Bill(4,2,4,new Date(),true));
+        list.add(new Bill(5,3,5,new Date(),true));
     }
 
     @Override

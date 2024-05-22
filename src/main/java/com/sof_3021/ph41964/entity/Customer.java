@@ -17,7 +17,7 @@ public class Customer {
 
     private String sdt;
 
-    private Integer idKhachHang;
+    private String maKhachHang;
 
     private Boolean trangThai;
 

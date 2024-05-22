@@ -1,6 +1,7 @@
 package com.sof_3021.ph41964.service;
 
 import com.sof_3021.ph41964.entity.BillDetail;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

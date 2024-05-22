@@ -1,4 +1,4 @@
-package com.sof_3021.ph41964.dto;
+package com.sof_3021.ph41964.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffDTO {
+public class Employee {
 
     private Integer id;
 
     private String ten;
 
-    private Integer idNhanVien;
+    private String maNhanVien;
 
     private String tenDangNhap;
 

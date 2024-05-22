@@ -2,15 +2,22 @@ package com.sof_3021.ph41964.service.impl;
 
 import com.sof_3021.ph41964.entity.Color;
 import com.sof_3021.ph41964.service.ColorService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColorImpl implements ColorService {
+@Service
+public class ColorServiceImpl implements ColorService {
 
     private final List<Color> list = new ArrayList<>();
 
-    public ColorImpl() {
+    public ColorServiceImpl() {
+        list.add(new Color(1,"Red","Màu đỏ",true));
+        list.add(new Color(2,"White","Màu trắng",true));
+        list.add(new Color(3,"Blue","Màu xanh dương",true));
+        list.add(new Color(4,"Green","Màu xanh lá cây",true));
+        list.add(new Color(5,"Black","Màu đen",true));
     }
 
     @Override
