@@ -1,24 +1,38 @@
 package com.sof_3021.ph41964.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "BillDetail")
+@Entity
 public class BillDetail {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer idHoaDon;
+    @ManyToOne
+    @JoinColumn(name = "idBill")
+    private Bill bill;
 
-    private Integer idSPCT;
 
-    private Integer soLuong;
+    @ManyToOne
+    @JoinColumn(name = "idProductDetail")
+    private ProductDetail productDetail;
 
-    private Boolean trangThai;
+    private Integer quantity;
+
+    private Boolean status;
 
 }

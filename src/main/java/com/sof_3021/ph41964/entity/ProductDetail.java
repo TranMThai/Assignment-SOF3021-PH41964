@@ -1,30 +1,50 @@
 package com.sof_3021.ph41964.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.List;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "ProductDetail")
+@Entity
 public class ProductDetail {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String maSPCT;
+    private String codeProductDetail;
 
-    private Integer idKichThuoc;
+    @ManyToOne
+    @JoinColumn(name = "idSize")
+    private Size size;
 
-    private Integer idMauSac;
+    @ManyToOne
+    @JoinColumn(name = "idColor")
+    private Color color;
 
-    private Integer idSanPham;
+    @ManyToOne
+    @JoinColumn(name = "idProduct")
+    private Product product;
 
-    private Integer soLuong;
+    private Integer quantity;
 
-    private Integer donGia;
+    private Boolean status;
 
-    private Boolean trangThai;
-
+    @OneToMany(mappedBy = "productDetail")
+    private List<BillDetail> billDetails;
 }

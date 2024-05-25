@@ -1,24 +1,39 @@
 package com.sof_3021.ph41964.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.List;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Customer")
+@Entity
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String ten;
+    private String code;
 
-    private String sdt;
+    private String name;
 
-    private String maKhachHang;
+    private String phoneNumber;
 
-    private Boolean trangThai;
+    private Boolean status;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Bill> bills;
 }
