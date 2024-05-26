@@ -1,6 +1,5 @@
 package com.sof_3021.ph41964.controller;
 
-import com.sof_3021.ph41964.dto.BillDTO;
 import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.entity.BillDetail;
 import com.sof_3021.ph41964.entity.Customer;
@@ -21,12 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/bill")
-public class BillController {
+@RequestMapping("/billDetail")
+public class BillDetailController {
 
 
     @Autowired
@@ -43,32 +41,25 @@ public class BillController {
 
     @GetMapping("")
     public String index(Model model) {
-        model.addAttribute("list", billService.getAllActive());
-        return "admin/bill/Index";
+        model.addAttribute("list", billDetailService.getAllActive());
+        return "admin/billDetail/Index";
     }
 
     @Transactional
     @GetMapping("/remove")
     public String remove(@RequestParam("id") int id) {
-        List<BillDetail> billDetailList = billService.getById(id).getBillDetails();
-        billDetailList.stream()
-                .forEach(billDetail -> {
-                    billDetail.setStatus(false);
-                    billDetailService.update(billDetail);
-                });
-
-        Bill bill = billService.getById(id);
-        bill.setStatus(false);
-        billService.update(bill);
-        return "redirect:/bill";
+        BillDetail billDetail = billDetailService.getById(id);
+        billDetail.setStatus(false);
+        billDetailService.update(billDetail);
+        return "redirect:/billDetail";
     }
 
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") int id,
                          Model model) {
-        model.addAttribute("bill", billService.getById(id));
-        return "admin/bill/Detail";
+        model.addAttribute("billDetail", billDetailService.getById(id));
+        return "admin/billDetail/Detail";
     }
 
 
@@ -78,22 +69,12 @@ public class BillController {
         try {
             if (search != null && !search.trim().isEmpty()) {
                 Integer searchInt = Integer.valueOf(search);
-                model.addAttribute("list", billService.search(searchInt));
-                return "admin/bill/Index";
+                model.addAttribute("list", billDetailService.search(searchInt));
+                return "admin/billDetail/Index";
             }
         } catch (NumberFormatException e) {
         }
-        return "redirect:/bill";
-    }
-
-    @ModelAttribute("employees")
-    public List<Employee> getEmployees() {
-        return employeeService.getAll();
-    }
-
-    @ModelAttribute("customers")
-    public List<Customer> getCustomers() {
-        return customerService.getAll();
+        return "redirect:/billDetail";
     }
 
     @GetMapping("/view-update/{id}")
@@ -103,13 +84,13 @@ public class BillController {
         return "admin/bill/Update";
     }
 
-    @PostMapping("/update")
-    public String update(@ModelAttribute("bill") Bill bill,
-                         @ModelAttribute("purchaseDate") String date,
-                         Model model) {
-        bill.setPurchaseDate(DateUtils.parseDate(date));
-        billService.update(bill);
-        return "redirect:/bill";
-    }
+//    @PostMapping("/update")
+//    public String update(@ModelAttribute("bill") Bill bill,
+//                         @ModelAttribute("purchaseDate") String date,
+//                         Model model) {
+//        bill.setPurchaseDate(DateUtils.parseDate(date));
+//        billService.update(bill);
+//        return "redirect:/bill";
+//    }
 
 }

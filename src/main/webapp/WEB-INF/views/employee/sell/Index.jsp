@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -7,18 +8,25 @@
 
     <link rel="stylesheet" href="/resources/lib/bootstrap.css">
 </head>
-<body>
+<body class="bg-body-secondary">
 
 <header>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+            <button class="btn text-white h-100 me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                <i class="fa-solid fa-bars fs-3"></i>
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mynavbar">
-                <ul class="navbar-nav me-auto">
+                <form class="d-flex align-items-center my-0" action="/sell/search">
+                    <input class="form-control me-2" type="text" placeholder="Search" name="search">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0)">Link</a>
                     </li>
@@ -29,15 +37,130 @@
                         <a class="nav-link" href="javascript:void(0)">Link</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn btn-primary" type="button">Search</button>
-                </form>
             </div>
         </div>
     </nav>
+
+    <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
+        <div class="offcanvas-header">
+            <h1 class="offcanvas-title">Heading</h1>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>Some text lorem ipsum.</p>
+            <p>Some text lorem ipsum.</p>
+            <p>Some text lorem ipsum.</p>
+            <button class="btn btn-secondary" type="button">A Button</button>
+        </div>
+    </div>
 </header>
 
+<main class="row g-0">
+    <div class="col-6 ps-4 pe-3">
+        <div class="p-1 bg-white row">
+            <div class="tbodyDiv pe-1" style="height: 90vh;overflow: auto;">
+                <h3>Danh sách sản phẩm</h3>
+                <table class="table table-striped table align-middle" style="overflow-y:scroll">
+                    <thead class="sticky-top">
+                    <tr>
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Active</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="pd" items="${productDetails}">
+                        <tr>
+                            <td>${pd.id}</td>
+                            <td>${pd.code}</td>
+                            <td>${pd.product.name}</td>
+                            <td>${pd.size.name}</td>
+                            <td>${pd.color.name}</td>
+                            <td>${pd.quantity}</td>
+                            <td>${pd.product.price} vnđ</td>
+                            <td>
+                                <a href="/sell/add?id=${pd.id}" class="btn btn-sm btn-success">Add</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 ps-1 pe-2">
+        <div class="row g-0">
+            <div class="col-12 mb-1">
+                <div class=" bg-white">
+                    <div class="tbodyDiv pe-1" style="height:53vh;overflow: auto;">
+                        <div class="p-2">
+                            <h4>Giỏ hàng</h4>
+                            <table class="table table-striped table align-middle" style="overflow-y:scroll">
+                                <thead class="sticky-top">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total Price</th>
+                                    <th>Active</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="c" varStatus="i" items="${cart}">
+                                    <tr>
+                                        <td>${i.index+1}</td>
+                                        <td>${c.code}</td>
+                                        <td>${c.product.name}</td>
+                                        <td>${c.quantity}</td>
+                                        <td>${c.product.price}</td>
+                                        <td>${c.quantity * c.product.price}</td>
+                                        <td>
+                                            <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="/sell/remove?id=${c.id}" class="btn btn-sm btn-danger">Remove</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-1">
+                <div class="col-12 bg-white">
+                    <div class="p-3">
+
+                        <form action="/sell/pay" method="post">
+                            <p class="text-nowrap my-3">Staff: ${account.code}</p>
+                            <div class="d-flex align-items-center mb-3">
+                                <p class="text-nowrap mb-0 me-2">Customer: </p>
+                                <input type="text" name="customer" class="form-control">
+                            </div>
+                            <p class="text-nowrap my-3">Total quantity:
+                            </p>
+                            <p class="text-nowrap my-3">Total amount:
+                            </p>
+                            <div class="d-flex justify-content-evenly mb-2">
+                                <button type="submit" class="btn btn-lg btn-primary">Pay
+                                </button>
+                                <a href="/sell/clear" class="btn btn-lg btn-danger">Clear</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
 
 <script src="/resources/lib/bootstrap.js"></script>

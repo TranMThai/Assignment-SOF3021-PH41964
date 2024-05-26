@@ -1,6 +1,8 @@
 package com.sof_3021.ph41964.service;
 
+import com.sof_3021.ph41964.dto.AccountDTO;
 import com.sof_3021.ph41964.entity.Employee;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ public interface EmployeeService {
     void update(Employee employee);
 
     void remove(int id);
+
+    Employee getByUsername(String username);
+
+    Employee login(Employee account);
 }

@@ -1,17 +1,14 @@
 package com.sof_3021.ph41964.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -33,8 +30,15 @@ public class Employee {
 
     private String password;
 
+    private Boolean role;
+
     private Boolean status;
 
     @OneToMany(mappedBy = "employee")
     private List<Bill> bills;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String roleName = (role != null && role) ? "ADMIN" : "USER";
+        return Collections.singleton(new SimpleGrantedAuthority(roleName));
+    }
 }

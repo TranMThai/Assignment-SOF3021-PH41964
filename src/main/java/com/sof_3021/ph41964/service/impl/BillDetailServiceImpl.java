@@ -21,7 +21,7 @@ public class BillDetailServiceImpl implements BillDetailService {
 
     @Override
     public BillDetail getById(int id) {
-        return billDetailRepository.findById(id).get();
+        return billDetailRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -37,6 +37,21 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public void remove(int id) {
         billDetailRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BillDetail> getAllActive() {
+        return billDetailRepository.findAll().stream()
+                .filter(BillDetail::getStatus)
+                .toList();
+    }
+
+    @Override
+    public List<BillDetail> search(Integer searchInt) {
+        return billDetailRepository.findAll().stream()
+                .filter(billDetail -> billDetail.getStatus()
+                        && billDetail.getId().equals(searchInt))
+                .toList();
     }
 
 }

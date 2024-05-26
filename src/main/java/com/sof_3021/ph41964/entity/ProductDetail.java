@@ -27,7 +27,7 @@ public class ProductDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String codeProductDetail;
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "idSize")
@@ -47,4 +47,15 @@ public class ProductDetail {
 
     @OneToMany(mappedBy = "productDetail")
     private List<BillDetail> billDetails;
+
+    public ProductDetail(ProductDetail productDetail) {
+        this.id = productDetail.getId();
+        this.code = productDetail.getCode();
+        this.size = productDetail.getSize();
+        this.color = productDetail.getColor();
+        this.product = productDetail.getProduct();
+        this.quantity = productDetail.getQuantity();
+        this.status = productDetail.getStatus();
+        this.billDetails = productDetail.getBillDetails();
+    }
 }

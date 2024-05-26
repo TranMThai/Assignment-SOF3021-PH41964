@@ -22,7 +22,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public Size getById(int id) {
-        return sizeRepository.findById(id).get();
+        return sizeRepository.findById(id).orElse(null);
     }
 
     @Override

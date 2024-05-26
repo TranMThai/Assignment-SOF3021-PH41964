@@ -15,4 +15,8 @@ public interface BillDetailService {
     void update(BillDetail billDetail);
 
     void remove(int id);
+
+    List<BillDetail> getAllActive();
+
+    List<BillDetail> search(Integer searchInt);
 }

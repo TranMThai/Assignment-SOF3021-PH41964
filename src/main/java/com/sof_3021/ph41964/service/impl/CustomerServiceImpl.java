@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getById(int id) {
-        return customerRepository.findById(id).get();
+        return customerRepository.findById(id).orElse(null);
     }
 
     @Override

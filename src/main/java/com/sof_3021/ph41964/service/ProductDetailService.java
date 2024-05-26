@@ -14,4 +14,10 @@ public interface ProductDetailService {
     void update(ProductDetail productDetail);
 
     void remove(int id);
+
+    List<ProductDetail> search(String search);
+
+    void addToCart(List<ProductDetail> cart, String id);
+
+    void removeFromCart(List<ProductDetail> cart, String id);
 }

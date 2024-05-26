@@ -21,7 +21,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Override
     public ProductDetail getById(int id) {
-        return productDetailRepository.findById(id).get();
+        return productDetailRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -38,4 +38,37 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public void remove(int id) {
         productDetailRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProductDetail> search(String search) {
+        return productDetailRepository.findAll().stream()
+                .filter(productDetail -> productDetail.getId().equals(search)
+                        || productDetail.getProduct().getName().toLowerCase().contains(search.toLowerCase())
+                        || productDetail.getProduct().getCode().toLowerCase().contains(search.toLowerCase())
+                        || productDetail.getCode().toLowerCase().contains(search.toLowerCase()))
+                .toList();
+    }
+
+    @Override
+    public void addToCart(List<ProductDetail> cart, String id) {
+        int idP = Integer.valueOf(id);
+        ProductDetail productDetailOfCart = cart.stream()
+                .filter(productDetail -> productDetail.getId().equals(idP))
+                .findFirst().orElse(null);
+        if(productDetailOfCart!=null){
+            int x = productDetailOfCart.getQuantity();
+            productDetailOfCart.setQuantity(x+1);
+        }else{
+            ProductDetail productDetail = new ProductDetail(getById(Integer.valueOf(id)));
+            productDetail.setQuantity(1);
+            cart.add(productDetail);
+        }
+    }
+
+    @Override
+    public void removeFromCart(List<ProductDetail> cart, String id) {
+        int idP = Integer.valueOf(id);
+        cart.removeIf(productDetail -> productDetail.getId().equals(idP));
+    }
+
 }

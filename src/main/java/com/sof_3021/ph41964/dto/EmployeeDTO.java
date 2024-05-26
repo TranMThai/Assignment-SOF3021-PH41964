@@ -27,6 +27,8 @@ public class EmployeeDTO {
 
     private String password;
 
+    private Boolean role;
+
     private Boolean status;
 
 }

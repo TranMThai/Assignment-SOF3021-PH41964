@@ -1,5 +1,6 @@
 package com.sof_3021.ph41964.service.impl;
 
+import com.sof_3021.ph41964.dto.BillDTO;
 import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.repository.BillDetailRepository;
 import com.sof_3021.ph41964.repository.BillRepository;
@@ -24,7 +25,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Bill getById(int id) {
-        return billRepository.findById(id).get();
+        return billRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -41,4 +42,18 @@ public class BillServiceImpl implements BillService {
     public void remove(int id) {
         billRepository.deleteById(id);
     }
+
+    @Override
+    public List<Bill> getAllActive() {
+        return billRepository.findAll().stream().filter(bill -> bill.getStatus()).toList();
+    }
+
+    @Override
+    public List<Bill> search(int search) {
+        return billRepository.findAll().stream()
+                .filter(bill -> bill.getStatus()
+                && bill.getId().equals(search))
+                .toList();
+    }
+
 }

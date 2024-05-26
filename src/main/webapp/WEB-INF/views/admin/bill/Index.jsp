@@ -15,7 +15,6 @@
         <input type="text" class="form-control" name="search">
         <input type="submit" class="btn btn-info px-3" value="Search">
     </form>
-    <a href="/bill/view-create" class="float-end"><button class="btn btn-success px-4">Add</button></a>
 
     <table class="table table-striped">
         <thead>
@@ -34,7 +33,7 @@
                 <td>${bill.id}</td>
                 <td>${bill.employee.code}</td>
                 <td>${bill.customer.code}</td>
-                <td><fmt:formatDate type = "both" dateStyle = "SHORT" timeStyle = "SHORT" value = "${bill.purchaseDate}" /></td>
+                <td><fmt:formatDate type = "date" dateStyle = "SHORT" value = "${bill.purchaseDate}" /></td>
                 <td>
                     <c:set var="total" value="0"/>
                     <c:forEach var="db" items="${bill.billDetails}">
@@ -43,9 +42,9 @@
                     ${total} vnđ
                 </td>
                 <td>
-                    <a href="/bill/detail/${bill.id}"><button class="btn btn-primary">Detail</button></a>
-                    <a href="/bill/view-update/${bill.id}"><button class="btn btn-warning">Update</button></a>
-                    <a href="/bill/remove?id=${bill.id}"><button class="btn btn-danger">Remove</button></a>
+                    <a href="/bill/detail/${bill.id}"><button class="btn btn-sm btn-primary">Detail</button></a>
+                    <a href="/bill/view-update/${bill.id}"><button class="btn btn-sm btn-warning">Update</button></a>
+                    <a href="/bill/remove?id=${bill.id}"><button class="btn btn-sm btn-danger">Remove</button></a>
                 </td>
             </tr>
         </c:forEach>

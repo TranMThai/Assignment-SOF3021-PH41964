@@ -1,5 +1,6 @@
 package com.sof_3021.ph41964.service;
 
+import com.sof_3021.ph41964.dto.BillDTO;
 import com.sof_3021.ph41964.entity.Bill;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface BillService {
 
     void remove(int id);
 
+    List<Bill> getAllActive();
+
+    List<Bill> search(int search);
 }

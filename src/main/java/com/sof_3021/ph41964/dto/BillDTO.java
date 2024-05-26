@@ -1,5 +1,9 @@
 package com.sof_3021.ph41964.dto;
 
+import com.sof_3021.ph41964.entity.Bill;
+import com.sof_3021.ph41964.entity.BillDetail;
+import com.sof_3021.ph41964.entity.Customer;
+import com.sof_3021.ph41964.entity.Employee;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +27,22 @@ public class BillDTO {
 
     private Integer id;
 
-    private Integer idEmployee;
+    private Employee employee;
 
-    private Integer idCustomer;
+    private Customer customer;
 
     private Date purchaseDate;
 
     private Boolean status;
 
+    private List<BillDetail> billDetails;
+
+    public BillDTO(Bill bill) {
+        this.id = bill.getId();
+        this.employee = bill.getEmployee();
+        this.customer = bill.getCustomer();
+        this.purchaseDate = bill.getPurchaseDate();
+        this.status = bill.getStatus();
+        this.billDetails = bill.getBillDetails();
+    }
 }

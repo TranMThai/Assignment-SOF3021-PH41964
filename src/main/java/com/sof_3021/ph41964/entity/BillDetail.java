@@ -34,5 +34,4 @@ public class BillDetail {
     private Integer quantity;
 
     private Boolean status;
-
 }
