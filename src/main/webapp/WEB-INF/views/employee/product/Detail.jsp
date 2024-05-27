@@ -21,14 +21,16 @@
                         <div class="carousel-indicators">
 
                             <c:forEach var="image" varStatus="i" items="${product.images}">
-                                <button type="button" data-bs-target="#demo" data-bs-slide-to="${i.index}" ${i.index==0?'class="active"':''}></button>
+                                <button type="button" data-bs-target="#demo"
+                                        data-bs-slide-to="${i.index}" ${i.index==0?'class="active"':''}></button>
                             </c:forEach>
                         </div>
 
                         <div class="carousel-inner">
                             <c:forEach var="image" varStatus="i" items="${product.images}">
                                 <div class="carousel-item ${i.index==0?'active':''}">
-                                    <img src="/resources/images/${image.url}" class="d-block w-100" style="height: 90vh; object-fit: cover">
+                                    <img src="/resources/images/${image.url}" class="d-block w-100"
+                                         style="height: 90vh; object-fit: cover">
                                 </div>
                             </c:forEach>
                         </div>
@@ -48,7 +50,8 @@
                         <h2>Code: ${product.code}</h2>
                         <h2>Name: ${product.name}</h2>
                         <h2 class="fw-bold text-danger">Price: ${product.price} vnđ</h2>
-                        <h2 class="fw-bold ${product.status?"text-success":"text-danger"}">Status: ${product.status?"Active":"Inactive"}</h2>
+                        <h2 class="fw-bold ${product.status?"text-success":"text-danger"}">
+                            Status: ${product.status?"Active":"Inactive"}</h2>
                     </div>
                     <div class="mt-3">
                         <table class="table table-striped">
@@ -65,22 +68,23 @@
                             </thead>
                             <tbody>
                             <c:forEach var="pd" varStatus="i" items="${product.productDetails}">
-                                <tr>
-                                    <td>${i.index}</td>
-                                    <td>${pd.id}</td>
-                                    <td>${pd.code}</td>
-                                    <td>${pd.color.code}</td>
-                                    <td>${pd.size.code}</td>
-                                    <td>${pd.quantity}</td>
-                                    <td>
-                                        <a href="/product_detail/read/${pd.id}">
-                                            <button class="btn btn-sm btn-warning">Update</button>
-                                        </a>
-                                        <a href="/product_detail/remove?id=${pd.id}">
-                                            <button class="btn btn-sm btn-danger">Remove</button>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <c:if test="${pd.status}">
+                                    <form action="/product/update_detail" method="post">
+                                        <input type="text" value="${pd.id}" name="id" hidden>
+                                        <tr>
+                                            <td>${i.index+1}</td>
+                                            <td>${pd.id}</td>
+                                            <td>${pd.code}</td>
+                                            <td>${pd.color.code}</td>
+                                            <td>${pd.size.code}</td>
+                                            <td><input type="number" name="quantity" value="${pd.quantity}" style="width: 50px"></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" type="submit">Update</button>
+                                                <a href="/product/remove_detail?id=${pd.id}" class="btn btn-sm btn-danger">Remove</a>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>

@@ -10,51 +10,33 @@
 </head>
 <body>
 
-<main>
-    <div class="container">
-        <div class="m-auto my-4" style="width: 90%;">
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-                        <!-- Indicators/dots -->
-                        <div class="carousel-indicators">
-
-                            <c:forEach var="image" varStatus="i" items="${product.images}">
-                                <button type="button" data-bs-target="#demo" data-bs-slide-to="${i.index}" ${i.index==0?'class="active"':''}></button>
-                            </c:forEach>
-                        </div>
-
-                        <div class="carousel-inner">
-                            <c:forEach var="image" varStatus="i" items="${product.images}">
-                                <div class="carousel-item ${i.index==0?'active':''}">
-                                    <img src="/resources/images/${image.url}" class="d-block w-100" style="height: 90vh; object-fit: cover">
-                                </div>
-                            </c:forEach>
-                        </div>
-
-                        <!-- Left and right controls/icons -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div>
-                        <h2>ID: ${product.id}</h2>
-                        <h2>Code: ${product.code}</h2>
-                        <h2>Name: ${product.name}</h2>
-                        <h2 class="fw-bold text-danger">Price: ${product.price} vnđ</h2>
-                        <h2 class="fw-bold ${product.status?"text-success":"text-danger"}">Status: ${product.status?"Active":"Inactive"}</h2>
-                    </div>
-                </div>
-            </div>
+<div class="container my-2">
+    <form:form action="/product/update" method="post" modelAttribute="product">
+        <div class="mb-3">
+            ID:
+            <form:input path="id" cssClass="form-control" readonly="true"/>
+            <form:errors path="id"/>
         </div>
-    </div>
-</main>
+        <div class="mb-3">
+            Code:
+            <form:input path="code" cssClass="form-control"/>
+            <form:errors path="code"/>
+        </div>
+        <div class="mb-3">
+            Name:
+            <form:input path="name" cssClass="form-control"/>
+            <form:errors path="name"/>
+        </div>
+        <div class="mb-3">
+            Price:
+            <form:input path="price" cssClass="form-control"/>
+            <form:errors path="price"/>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form:form>
+</div>
 
 <script src="/resources/lib/bootstrap.js"></script>
 <script src="/resources/lib/font-fontawesome-ae333ffef2.js"></script>

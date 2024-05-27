@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,6 +45,15 @@ public class ProductDetailController {
                          Model model) {
         ProductDetail productDetail = productDetailService.getById(Integer.valueOf(id));
         productDetail.setStatus(false);
+        productDetailService.update(productDetail);
+        return "redirect:/product_detail";
+    }
+
+    @PostMapping("update")
+    public String update(@RequestParam("id") String id,
+                         @RequestParam("quantity") String quantity) {
+        ProductDetail productDetail = productDetailService.getById(Integer.valueOf(id));
+        productDetail.setQuantity(Integer.valueOf(quantity));
         productDetailService.update(productDetail);
         return "redirect:/product_detail";
     }
