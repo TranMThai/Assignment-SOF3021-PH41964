@@ -1,6 +1,7 @@
 package com.sof_3021.ph41964.service;
 
 import com.sof_3021.ph41964.dto.AccountDTO;
+import com.sof_3021.ph41964.dto.EmployeeInfoDTO;
 import com.sof_3021.ph41964.entity.Employee;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,4 +21,12 @@ public interface EmployeeService {
     Employee getByUsername(String username);
 
     Employee login(Employee account);
+
+    List<Employee> getAllActive();
+
+    List<Employee> search(String search);
+
+    Employee infoToEntity(EmployeeInfoDTO employeeInfoDTO);
+
+    Employee accountToEntity(AccountDTO accountDTO);
 }

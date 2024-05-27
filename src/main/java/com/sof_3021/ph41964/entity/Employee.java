@@ -1,6 +1,8 @@
 package com.sof_3021.ph41964.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +24,19 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Không được trống")
     private String code;
 
+    @NotBlank(message = "Không được trống")
     private String name;
 
+    @NotBlank(message = "Không được trống")
     private String username;
 
+    @NotBlank(message = "Không được trống")
     private String password;
 
+    @NotNull(message = "Không được trống")
     private Boolean role;
 
     private Boolean status;

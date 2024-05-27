@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -26,10 +28,13 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Không được trống!!!")
     private String code;
 
+    @NotBlank(message = "Không được trống!!!")
     private String name;
 
+    @Pattern(regexp = "\\d{9,12}", message = "Sai pattern điện thoại")
     private String phoneNumber;
 
     private Boolean status;

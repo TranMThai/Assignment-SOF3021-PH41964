@@ -14,4 +14,8 @@ public interface CustomerService {
     void update(Customer customer);
 
     void remove(int id);
+
+    List<Customer> getAllActive();
+
+    List<Customer> search(String search);
 }

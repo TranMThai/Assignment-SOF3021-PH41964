@@ -1,11 +1,7 @@
 package com.sof_3021.ph41964.service.impl;
 
-import com.sof_3021.ph41964.dto.BillDTO;
 import com.sof_3021.ph41964.entity.Bill;
-import com.sof_3021.ph41964.repository.BillDetailRepository;
 import com.sof_3021.ph41964.repository.BillRepository;
-import com.sof_3021.ph41964.repository.CustomerRepository;
-import com.sof_3021.ph41964.repository.EmployeeRepository;
 import com.sof_3021.ph41964.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

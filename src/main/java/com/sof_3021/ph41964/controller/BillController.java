@@ -1,6 +1,5 @@
 package com.sof_3021.ph41964.controller;
 
-import com.sof_3021.ph41964.dto.BillDTO;
 import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.entity.BillDetail;
 import com.sof_3021.ph41964.entity.Customer;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller

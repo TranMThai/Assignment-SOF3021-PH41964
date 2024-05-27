@@ -37,4 +37,22 @@ public class CustomerServiceImpl implements CustomerService {
     public void remove(int id) {
         customerRepository.deleteById(id);
     }
+
+    @Override
+    public List<Customer> getAllActive() {
+        return customerRepository.findAll().stream()
+                .filter(Customer::getStatus)
+                .toList();
+    }
+
+    @Override
+    public List<Customer> search(String search) {
+        String newSearch = search.trim().toLowerCase();
+        return getAllActive().stream()
+                .filter(customer -> customer.getPhoneNumber().equals(newSearch)
+                        || customer.getName().toLowerCase().contains(newSearch)
+                        || customer.getCode().toLowerCase().contains(newSearch)
+                        || String.valueOf(customer.getId()).equals(newSearch))
+                .toList();
+    }
 }
