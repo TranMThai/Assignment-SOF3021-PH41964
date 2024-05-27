@@ -49,6 +49,9 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link fs-4" href="/sell">Sell</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link fs-4" href="/bill">Bill</a>
                 </li>
                 <li class="nav-item">

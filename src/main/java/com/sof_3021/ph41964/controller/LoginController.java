@@ -33,11 +33,7 @@ public class LoginController {
         Employee employee = employeeService.login(account);
         if (employee != null) {
             session.setAttribute("auth", employee);
-            if (employee.getRole()) {
-                return "redirect:/admin/product";
-            } else {
-                return "redirect:/sell";
-            }
+            return "redirect:/sell";
         }
         redirAttr.addFlashAttribute("message", "Sai tài khoản hoặc mật khẩu");
         return "redirect:/login";
