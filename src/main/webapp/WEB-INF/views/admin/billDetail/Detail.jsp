@@ -24,6 +24,7 @@
             <div class="col-6">
                 <h2>Product</h2>
                 <h4>Product code: ${billDetail.productDetail.product.code}</h4>
+                <h4>Product name: ${billDetail.productDetail.product.name}</h4>
                 <h4>Product detail code: ${billDetail.productDetail.code}</h4>
                 <h4>Price: ${billDetail.productDetail.product.price}</h4>
             </div>

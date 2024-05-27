@@ -14,4 +14,8 @@ public interface ColorService {
     void update(Color color);
 
     void remove(int id);
+
+    List<Color> search(String search);
+
+    List<Color> getAllActive();
 }

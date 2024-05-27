@@ -4,10 +4,12 @@ import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.entity.BillDetail;
 import com.sof_3021.ph41964.entity.Customer;
 import com.sof_3021.ph41964.entity.Employee;
+import com.sof_3021.ph41964.entity.ProductDetail;
 import com.sof_3021.ph41964.service.BillDetailService;
 import com.sof_3021.ph41964.service.BillService;
 import com.sof_3021.ph41964.service.CustomerService;
 import com.sof_3021.ph41964.service.EmployeeService;
+import com.sof_3021.ph41964.service.ProductDetailService;
 import com.sof_3021.ph41964.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/billDetail")
+@RequestMapping("/bill_detail")
 public class BillDetailController {
 
+
+    @Autowired
+    ProductDetailService productDetailService;
 
     @Autowired
     EmployeeService employeeService;
@@ -51,7 +56,7 @@ public class BillDetailController {
         BillDetail billDetail = billDetailService.getById(id);
         billDetail.setStatus(false);
         billDetailService.update(billDetail);
-        return "redirect:/billDetail";
+        return "redirect:/bill_detail";
     }
 
 
@@ -74,23 +79,30 @@ public class BillDetailController {
             }
         } catch (NumberFormatException e) {
         }
-        return "redirect:/billDetail";
+        return "redirect:/bill_detail";
+    }
+
+    @ModelAttribute("bills")
+    public List<Bill> getBills() {
+        return billService.getAll();
+    }
+
+    @ModelAttribute("productDetails")
+    public List<ProductDetail> getProductDetails() {
+        return productDetailService.getAll();
     }
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") int id,
                              Model model) {
-        model.addAttribute("bill", billService.getById(id));
-        return "admin/bill/Update";
+        model.addAttribute("billDetail", billDetailService.getById(id));
+        return "admin/billDetail/Update";
     }
 
-//    @PostMapping("/update")
-//    public String update(@ModelAttribute("bill") Bill bill,
-//                         @ModelAttribute("purchaseDate") String date,
-//                         Model model) {
-//        bill.setPurchaseDate(DateUtils.parseDate(date));
-//        billService.update(bill);
-//        return "redirect:/bill";
-//    }
+    @PostMapping("/update")
+    public String update(@ModelAttribute("billDetail") BillDetail billDetail) {
+        billDetailService.update(billDetail);
+        return "redirect:/bill_detail";
+    }
 
 }

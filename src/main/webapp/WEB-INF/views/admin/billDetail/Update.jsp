@@ -9,30 +9,30 @@
 </head>
 <body>
 <div class="container">
-    <form:form action="/bill/update" method="post" modelAttribute="bill">
+    <form:form action="/bill_detail/update" method="post" modelAttribute="billDetail">
         <div class="my-3">
             ID:
             <form:input path="id" readonly="true" cssClass="form-control"/>
         </div>
         <div class="my-3">
-            Employee
-            <form:select path="employee.id" cssClass="form-control">
-                <c:forEach var="emp" items="${employees}">
-                    <option value="${emp.id}" ${emp.id eq bill.employee.id?"selected":""}>${emp.code}</option>
+            Bill id
+            <form:select path="bill.id" cssClass="form-control">
+                <c:forEach var="bill" items="${bills}">
+                    <option value="${bill.id}" ${bill.id eq billDetail.bill.id?"selected":""}>${bill.id}</option>
                 </c:forEach>
             </form:select>
         </div>
         <div class="my-3">
             Customer
-            <form:select path="customer.id" cssClass="form-control">
-                <c:forEach var="cust" items="${customers}">
-                    <option value="${cust.id}" ${cust.id eq bill.customer.id?"selected":""}>${cust.code}</option>
+            <form:select path="productDetail.id" cssClass="form-control">
+                <c:forEach var="prod" items="${productDetails}">
+                    <option value="${prod.id}" ${prod.id eq billDetail.productDetail.id?"selected":""}>${prod.code}</option>
                 </c:forEach>
             </form:select>
         </div>
         <div class="my-3">
-            Purchase date:
-            <input value="<fmt:formatDate value="${bill.purchaseDate}" type="date" dateStyle="short"/>" name="purchaseDate" type="text" cssClass="form-control" class="form-control"/>
+            Quantity:
+            <form:input path="quantity" cssClass="form-control"/>
         </div>
         <div class="my-3">
             Status:

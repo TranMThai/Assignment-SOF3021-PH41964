@@ -14,4 +14,8 @@ public interface SizeService {
     void update(Size size);
 
     void remove(int id);
+
+    List<Size> getAllActive();
+
+    List<Size> search(String search);
 }

@@ -37,4 +37,22 @@ public class ColorServiceImpl implements ColorService {
     public void remove(int id) {
         colorRepository.deleteById(id);
     }
+
+    @Override
+    public List<Color> search(String search) {
+        String newSearch = search.trim().toLowerCase();
+        return getAllActive().stream()
+                .filter(color -> String.valueOf(color.getId()).equals(newSearch)
+                        || color.getName().toLowerCase().contains(newSearch)
+                        || color.getCode().toLowerCase().contains(newSearch))
+                .toList();
+    }
+
+    @Override
+    public List<Color> getAllActive() {
+        return colorRepository.findAll().
+                stream()
+                .filter(Color::getStatus)
+                .toList();
+    }
 }

@@ -10,7 +10,7 @@
 <body>
 <div class="container my-2">
 
-    <form action="/bill/search" method="get" class="d-flex align-items-center gap-5">
+    <form action="/bill_detail/search" method="get" class="d-flex align-items-center gap-5">
         <label class="form-label">ID:</label>
         <input type="text" class="form-control" name="search">
         <input type="submit" class="btn btn-info px-3" value="Search">
@@ -34,9 +34,9 @@
                 <td>${billDetail.productDetail.id}</td>
                 <td>${billDetail.quantity}</td>
                 <td>
-                    <a href="/billDetail/detail/${billDetail.id}"><button class="btn btn-sm btn-primary">Detail</button></a>
-                    <a href="/billDetail/view-update/${billDetail.id}"><button class="btn btn-sm btn-warning">Update</button></a>
-                    <a href="/billDetail/remove?id=${billDetail.id}"><button class="btn btn-sm btn-danger">Remove</button></a>
+                    <a href="/bill_detail/detail/${billDetail.id}"><button class="btn btn-sm btn-primary">Detail</button></a>
+                    <a href="/bill_detail/view-update/${billDetail.id}"><button class="btn btn-sm btn-warning">Update</button></a>
+                    <a href="/bill_detail/remove?id=${billDetail.id}"><button class="btn btn-sm btn-danger">Remove</button></a>
                 </td>
             </tr>
         </c:forEach>
