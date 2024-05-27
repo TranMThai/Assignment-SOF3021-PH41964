@@ -36,7 +36,7 @@
             Role:
             <form:radiobutton path="role" value="true" label="Admin" cssClass="ms-3"/>
             <form:radiobutton path="role" value="false" label="Staff" cssClass="ms-3"/>
-            <form:errors path="role"/>
+<%--            <form:errors path="role"/>--%>
         </div>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Update</button>

@@ -2,9 +2,11 @@ package com.sof_3021.ph41964.controller;
 
 import com.sof_3021.ph41964.entity.Color;
 import com.sof_3021.ph41964.service.ColorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,7 +61,12 @@ public class ColorController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute("color") Color color){
+    public String save(@Valid @ModelAttribute("color") Color color,
+                       BindingResult result,
+                       Model model){
+        if(result.hasErrors()){
+            return index(model);
+        }
         color.setStatus(true);
         colorService.update(color);
         return "redirect:/color";

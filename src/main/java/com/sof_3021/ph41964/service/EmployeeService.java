@@ -22,6 +22,8 @@ public interface EmployeeService {
 
     Employee login(Employee account);
 
+    Employee login(AccountDTO account);
+
     List<Employee> getAllActive();
 
     List<Employee> search(String search);

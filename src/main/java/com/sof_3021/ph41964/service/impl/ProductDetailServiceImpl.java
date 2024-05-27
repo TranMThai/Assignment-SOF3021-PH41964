@@ -42,7 +42,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     @Override
     public List<ProductDetail> search(String search) {
         return productDetailRepository.findAll().stream()
-                .filter(productDetail -> productDetail.getId().equals(search)
+                .filter(productDetail -> String.valueOf(productDetail.getId()).equals(search)
                         || productDetail.getProduct().getName().toLowerCase().contains(search.toLowerCase())
                         || productDetail.getProduct().getCode().toLowerCase().contains(search.toLowerCase())
                         || productDetail.getCode().toLowerCase().contains(search.toLowerCase()))
@@ -55,10 +55,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         ProductDetail productDetailOfCart = cart.stream()
                 .filter(productDetail -> productDetail.getId().equals(idP))
                 .findFirst().orElse(null);
-        if(productDetailOfCart!=null){
+        if (productDetailOfCart != null) {
             int x = productDetailOfCart.getQuantity();
-            productDetailOfCart.setQuantity(x+1);
-        }else{
+            productDetailOfCart.setQuantity(x + 1);
+        } else {
             ProductDetail productDetail = new ProductDetail(getById(Integer.valueOf(id)));
             productDetail.setQuantity(1);
             cart.add(productDetail);
@@ -71,4 +71,25 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         cart.removeIf(productDetail -> productDetail.getId().equals(idP));
     }
 
+    @Override
+    public void editQuantityInCart(List<ProductDetail> cart, String id, Integer quantity) {
+        int idP = Integer.valueOf(id);
+        ProductDetail productDetailOfCart = cart.stream()
+                .filter(productDetail -> productDetail.getId().equals(idP))
+                .findFirst().orElse(null);
+        if (productDetailOfCart != null) {
+            productDetailOfCart.setQuantity(quantity);
+        } else {
+            ProductDetail productDetail = new ProductDetail(getById(Integer.valueOf(id)));
+            productDetail.setQuantity(1);
+            cart.add(productDetail);
+        }
+    }
+
+    @Override
+    public List<ProductDetail> getAllActive() {
+        return productDetailRepository.findAll().stream()
+                .filter(ProductDetail::getStatus)
+                .toList();
+    }
 }

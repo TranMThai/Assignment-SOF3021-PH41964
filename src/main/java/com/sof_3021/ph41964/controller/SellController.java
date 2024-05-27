@@ -2,6 +2,7 @@ package com.sof_3021.ph41964.controller;
 
 import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.entity.BillDetail;
+import com.sof_3021.ph41964.entity.Customer;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.entity.ProductDetail;
 import com.sof_3021.ph41964.service.BillDetailService;
@@ -54,6 +55,11 @@ public class SellController {
         return new ArrayList<>();
     }
 
+    @ModelAttribute("customers")
+    public List<Customer> getCustomers() {
+        return customerService.getAllActive();
+    }
+
     @GetMapping("")
     public String index(Model model) {
         model.addAttribute("productDetails", productDetailService.getAll());
@@ -72,6 +78,14 @@ public class SellController {
         return "redirect:/sell";
     }
 
+    @GetMapping("edit")
+    public String ge(@RequestParam("id") String id,
+                     @RequestParam("quantity") int quantity,
+                     @ModelAttribute("cart") List<ProductDetail> cart) {
+        productDetailService.editQuantityInCart(cart, id, quantity);
+        return "redirect:/sell";
+    }
+
     @GetMapping("remove")
     public String removeFromCart(@RequestParam("id") String id, @ModelAttribute("cart") List<ProductDetail> cart) {
         productDetailService.removeFromCart(cart, id);
@@ -85,19 +99,19 @@ public class SellController {
     }
 
 
-//    @Transactional
+    @Transactional
     @PostMapping("pay")
     public String pay(@SessionAttribute("cart") List<ProductDetail> cart,
-                      @SessionAttribute("account") Employee employee,
+                      @SessionAttribute("auth") Employee employee,
                       @RequestParam("customer") String customerId) {
 
-        if (cart == null || employee == null) {
+        if (cart == null || cart.isEmpty() || employee == null) {
             return "redirect:/sell";
         }
 
         Bill bill = new Bill();
         bill.setEmployee(employeeService.getById(employee.getId()));
-        if(!customerId.isEmpty()){
+        if (!customerId.isEmpty()) {
             bill.setCustomer(customerService.getById(Integer.valueOf(customerId)));
         }
         bill.setPurchaseDate(new Date());

@@ -19,10 +19,11 @@
                     <h2 class="text-center">Login</h2>
                 </div>
                 <div class="card-body">
-                    <form:form action="/login/enter" method="post" modelAttribute="account">
+                    <form:form action="/login/enter" method="post" modelAttribute="auth">
                         <div class="form-group">
                             <label for="username">Username:</label>
                             <form:input path="username" id="username" class="form-control"/>
+
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>

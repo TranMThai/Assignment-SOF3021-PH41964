@@ -1,5 +1,6 @@
 package com.sof_3021.ph41964.controller;
 
+import com.sof_3021.ph41964.dto.AccountDTO;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -21,17 +22,17 @@ public class LoginController {
 
     @GetMapping("")
     public String index(Model model) {
-        model.addAttribute("account", new Employee());
+        model.addAttribute("auth", new AccountDTO());
         return "Login";
     }
 
     @PostMapping("/enter")
-    public String login(@ModelAttribute("account") Employee account,
+    public String login(@ModelAttribute("auth") AccountDTO account,
                         RedirectAttributes redirAttr,
                         HttpSession session) {
         Employee employee = employeeService.login(account);
         if (employee != null) {
-            session.setAttribute("account", employee);
+            session.setAttribute("auth", employee);
             if (employee.getRole()) {
                 return "redirect:/admin/product";
             } else {

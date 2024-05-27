@@ -47,10 +47,32 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            <p>Some text lorem ipsum.</p>
-            <p>Some text lorem ipsum.</p>
-            <p>Some text lorem ipsum.</p>
-            <button class="btn btn-secondary" type="button">A Button</button>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/bill">Bill</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/bill_detail">Bill detail</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/product">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/product_detail">Product detail</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/customer">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/employee">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/color">Color</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/size">Size</a>
+                </li>
+            </ul>
         </div>
     </div>
 </header>
@@ -113,19 +135,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:set var="totalAmount" value="0"/>
+                                <c:set var="totalquantity" value="0"/>
                                 <c:forEach var="c" varStatus="i" items="${cart}">
-                                    <tr>
-                                        <td>${i.index+1}</td>
-                                        <td>${c.code}</td>
-                                        <td>${c.product.name}</td>
-                                        <td>${c.quantity}</td>
-                                        <td>${c.product.price}</td>
-                                        <td>${c.quantity * c.product.price}</td>
-                                        <td>
-                                            <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                            <a href="/sell/remove?id=${c.id}" class="btn btn-sm btn-danger">Remove</a>
-                                        </td>
-                                    </tr>
+                                    <form action="/sell/edit">
+                                        <tr>
+
+                                            <td>${i.index+1}</td>
+                                            <td>${c.code}</td>
+                                            <td>${c.product.name}</td>
+                                            <td>
+                                                <input type="hidden" name="id" value="${c.id}">
+                                                <input type="number" name="quantity" value="${c.quantity}"
+                                                       style="width: 50px">
+                                            </td>
+                                            <td>${c.product.price}</td>
+                                            <td>${c.quantity * c.product.price}</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-sm btn-warning">Edit</button>
+                                                <a href="/sell/remove?id=${c.id}"
+                                                   class="btn btn-sm btn-danger">Remove</a>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                    <c:set var="totalAmount" value="${totalAmount + c.quantity * c.product.price}"/>
+                                    <c:set var="totalquantity" value="${totalquantity + c.quantity}"/>
                                 </c:forEach>
                                 </tbody>
                             </table>
@@ -139,14 +173,20 @@
                     <div class="p-3">
 
                         <form action="/sell/pay" method="post">
-                            <p class="text-nowrap my-3">Staff: ${account.code}</p>
+                            <p class="text-nowrap my-3">Staff: ${auth.code}</p>
                             <div class="d-flex align-items-center mb-3">
                                 <p class="text-nowrap mb-0 me-2">Customer: </p>
-                                <input type="text" name="customer" class="form-control">
+                                <select name="customer" class="form-control mx-3">
+                                    <option value="${null}">Choose customer</option>
+                                    <c:forEach var="cust" items="${customers}">
+                                        <option value="${cust.id}">${cust.code}</option>
+                                    </c:forEach>
+                                </select>
+                                <a href="/customer" class="btn btn-success text-nowrap">New customer</a>
                             </div>
-                            <p class="text-nowrap my-3">Total quantity:
+                            <p class="text-nowrap my-3">Total quantity: ${totalquantity}
                             </p>
-                            <p class="text-nowrap my-3">Total amount:
+                            <p class="text-nowrap my-3">Total amount: ${totalAmount} vnđ
                             </p>
                             <div class="d-flex justify-content-evenly mb-2">
                                 <button type="submit" class="btn btn-lg btn-primary">Pay

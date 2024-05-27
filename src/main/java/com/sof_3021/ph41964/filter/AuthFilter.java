@@ -42,7 +42,7 @@
 //            return;
 //        }
 //
-//        if (session == null || session.getAttribute("account") == null) {
+//        if (session == null || session.getAttribute("auth") == null) {
 //            response.sendRedirect("/login");
 //            return;
 //        }

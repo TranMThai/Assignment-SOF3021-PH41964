@@ -23,7 +23,7 @@
             </form:select>
         </div>
         <div class="my-3">
-            Customer
+            ProductDetail
             <form:select path="productDetail.id" cssClass="form-control">
                 <c:forEach var="prod" items="${productDetails}">
                     <option value="${prod.id}" ${prod.id eq billDetail.productDetail.id?"selected":""}>${prod.code}</option>

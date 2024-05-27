@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/resources/lib/bootstrap.css">
 </head>
 <body>
+
 <div class="container my-2">
 
     <form action="/size/search" method="get" class="d-flex align-items-center gap-5">
@@ -52,10 +53,12 @@
                 <div class="mb-3">
                     Code:
                     <form:input path="code" cssClass="form-control"/>
+                    <form:errors path="code"/>
                 </div>
                 <div class="mb-3">
                     Name:
                     <form:input path="name" cssClass="form-control"/>
+                    <form:errors path="name"/>
                 </div>
                 <div class="d-flex justify-content-evenly">
                     <a href="/size/clear" class="btn btn-secondary">Clear</a>

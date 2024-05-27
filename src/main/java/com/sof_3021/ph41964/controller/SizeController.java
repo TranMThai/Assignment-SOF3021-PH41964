@@ -2,9 +2,11 @@ package com.sof_3021.ph41964.controller;
 
 import com.sof_3021.ph41964.entity.Size;
 import com.sof_3021.ph41964.service.SizeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,7 +61,12 @@ public class SizeController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute("size") Size size){
+    public String save(@Valid @ModelAttribute("size") Size size,
+                       BindingResult result,
+                       Model model){
+        if(result.hasErrors()){
+            return index(model);
+        }
         size.setStatus(true);
         sizeService.update(size);
         return "redirect:/size";

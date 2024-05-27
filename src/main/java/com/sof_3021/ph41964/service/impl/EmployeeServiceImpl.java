@@ -54,6 +54,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee login(AccountDTO account) {
+        Optional<Employee> opEmployee = employeeRepository.findAll().stream()
+                .filter(em -> em.getUsername().equals(account.getUsername())
+                        && em.getPassword().equals(account.getPassword()))
+                .findFirst();
+        if (opEmployee.isPresent()) {
+            return opEmployee.get();
+        }
+        return null;
+    }
+
+    @Override
     public List<Employee> getAllActive() {
         return employeeRepository.findAll().stream()
                 .filter(Employee::getStatus)

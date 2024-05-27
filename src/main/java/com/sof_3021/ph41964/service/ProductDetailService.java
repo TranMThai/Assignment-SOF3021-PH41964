@@ -20,4 +20,8 @@ public interface ProductDetailService {
     void addToCart(List<ProductDetail> cart, String id);
 
     void removeFromCart(List<ProductDetail> cart, String id);
+
+    void editQuantityInCart(List<ProductDetail> cart, String id, Integer quantity);
+
+    List<ProductDetail> getAllActive();
 }

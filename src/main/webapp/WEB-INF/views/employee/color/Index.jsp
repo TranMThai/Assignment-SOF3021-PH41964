@@ -52,10 +52,12 @@
                 <div class="mb-3">
                     Code:
                     <form:input path="code" cssClass="form-control"/>
+                    <form:errors path="code"/>
                 </div>
                 <div class="mb-3">
                     Name:
                     <form:input path="name" cssClass="form-control"/>
+                    <form:errors path="name"/>
                 </div>
                 <div class="d-flex justify-content-evenly">
                     <a href="/color/clear" class="btn btn-secondary">Clear</a>

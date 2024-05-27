@@ -14,4 +14,8 @@ public interface ProductService {
     void update(Product product);
 
     void remove(int id);
+
+    List<Product> getAllActive();
+
+    List<Product> search(String search);
 }

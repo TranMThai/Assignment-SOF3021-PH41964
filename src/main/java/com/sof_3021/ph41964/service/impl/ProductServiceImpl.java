@@ -38,4 +38,21 @@ public class ProductServiceImpl implements ProductService {
     public void remove(int id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<Product> getAllActive() {
+        return productRepository.findAll().stream()
+                .filter(Product::getStatus)
+                .toList();
+    }
+
+    @Override
+    public List<Product> search(String search) {
+        String newSearch = search.trim().toLowerCase();
+        return getAllActive().stream()
+                .filter(product -> String.valueOf(product.getId()).equals(newSearch)
+                        || product.getCode().toLowerCase().contains(newSearch)
+                        || product.getName().toLowerCase().contains(newSearch))
+                .toList();
+    }
 }
