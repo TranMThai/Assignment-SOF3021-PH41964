@@ -43,7 +43,7 @@
 
     <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Heading</h1>
+            <h1 class="offcanvas-title">Menu</h1>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -75,10 +75,30 @@
                 <li class="nav-item">
                     <a class="nav-link fs-4" href="/size">Size</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/logout">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
 </header>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Không thể mua nhiều hơn số lượng sản phẩm trong kho
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <main class="row g-0">
     <div class="col-6 ps-4 pe-3">
@@ -208,5 +228,11 @@
 
 <script src="/resources/lib/bootstrap.js"></script>
 <script src="/resources/lib/font-fontawesome-ae333ffef2.js"></script>
+<script>
+    const message = "${message}"
+    if(message!==""){
+        new bootstrap.Modal(document.querySelector("#exampleModal")).show()
+    }
+</script>
 </body>
 </html>

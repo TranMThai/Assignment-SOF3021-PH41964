@@ -43,7 +43,7 @@
 
     <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Heading</h1>
+            <h1 class="offcanvas-title">Menu</h1>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -75,6 +75,9 @@
                 <li class="nav-item">
                     <a class="nav-link fs-4" href="/size">Size</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/logout">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -86,7 +89,7 @@
         <input type="text" class="form-control" name="search">
         <input type="submit" class="btn btn-info px-3">
     </form>
-
+    <h2>Color</h2>
     <div class="row">
         <div class="col-8">
             <table class="table table-striped">
@@ -99,7 +102,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="color" items="${list}">
+                <c:forEach var="color" items="${list.content}">
                     <tr>
                         <td>${color.id}</td>
                         <td>${color.code}</td>
@@ -112,6 +115,25 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="${url}page=0" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="${url}page=${list.number-1<0?0:list.number-1}">${list.number==0?"...":list.number}</a></li>
+                    <li class="page-item"><a class="page-link" href="${url}page=${list.number}">${list.number+1}</a></li>
+                    <li class="page-item"><a class="page-link" href="${url}page=${list.number+1>list.totalPages-1?list.totalPages-1:list.number+1}">${list.number==list.totalPages-1?"...":list.number+2}</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="${url}page=${list.totalPages-1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-4">
             <form:form action="/color/save" method="post" modelAttribute="color">

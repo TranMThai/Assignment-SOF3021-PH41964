@@ -2,15 +2,12 @@ package com.sof_3021.ph41964.controller;
 
 import com.sof_3021.ph41964.entity.Bill;
 import com.sof_3021.ph41964.entity.BillDetail;
-import com.sof_3021.ph41964.entity.Customer;
-import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.entity.ProductDetail;
 import com.sof_3021.ph41964.service.BillDetailService;
 import com.sof_3021.ph41964.service.BillService;
 import com.sof_3021.ph41964.service.CustomerService;
 import com.sof_3021.ph41964.service.EmployeeService;
 import com.sof_3021.ph41964.service.ProductDetailService;
-import com.sof_3021.ph41964.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +42,9 @@ public class BillDetailController {
     BillDetailService billDetailService;
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list", billDetailService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", billDetailService.getByPageActive(page));
         return "admin/billDetail/Index";
     }
 
@@ -61,7 +59,7 @@ public class BillDetailController {
 
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") int id,
+    public String detail(@PathVariable("id") Integer id,
                          Model model) {
         model.addAttribute("billDetail", billDetailService.getById(id));
         return "admin/billDetail/Detail";
@@ -71,13 +69,9 @@ public class BillDetailController {
     @GetMapping("/search")
     public String search(@RequestParam("search") String search,
                          Model model) {
-        try {
-            if (search != null && !search.trim().isEmpty()) {
-                Integer searchInt = Integer.valueOf(search);
-                model.addAttribute("list", billDetailService.search(searchInt));
-                return "admin/billDetail/Index";
-            }
-        } catch (NumberFormatException e) {
+        if (search.matches("\\d+")) {
+            model.addAttribute("billDetail", billDetailService.getById(Integer.valueOf(search)));
+            return "admin/billDetail/Detail";
         }
         return "redirect:/bill_detail";
     }

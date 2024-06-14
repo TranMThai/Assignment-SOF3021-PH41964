@@ -21,15 +21,19 @@ public class ProductDetailController {
     ProductDetailService productDetailService;
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list", productDetailService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", productDetailService.getByPageActive(page));
+        model.addAttribute("url","/product_detail?");
         return "employee/productDetail/Index";
     }
 
     @GetMapping("search")
-    public String search(@RequestParam("search") String search,
+    public String search(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                         @RequestParam("search") String search,
                          Model model) {
-        model.addAttribute("list", productDetailService.search(search));
+        model.addAttribute("list", productDetailService.search(page,search));
+        model.addAttribute("url","/product_detail/search?search="+search+"&");
         return "employee/productDetail/Index";
     }
 

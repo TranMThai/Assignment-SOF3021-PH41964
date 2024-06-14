@@ -4,6 +4,9 @@ import com.sof_3021.ph41964.entity.Product;
 import com.sof_3021.ph41964.repository.ProductRepository;
 import com.sof_3021.ph41964.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,12 +50,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> search(String search) {
-        String newSearch = search.trim().toLowerCase();
-        return getAllActive().stream()
-                .filter(product -> String.valueOf(product.getId()).equals(newSearch)
-                        || product.getCode().toLowerCase().contains(newSearch)
-                        || product.getName().toLowerCase().contains(newSearch))
-                .toList();
+    public Page<Product> getByPageActive(Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return productRepository.getByPageActive(pageable);
+    }
+
+    @Override
+    public Page<Product> search(Integer page, String search) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return productRepository.searchPageActive(search, pageable);
     }
 }

@@ -1,7 +1,7 @@
 package com.sof_3021.ph41964.controller;
 
-import com.sof_3021.ph41964.dto.AccountDTO;
-import com.sof_3021.ph41964.dto.EmployeeInfoDTO;
+import com.sof_3021.ph41964.model.Account;
+import com.sof_3021.ph41964.model.EmployeeInfo;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -24,15 +24,19 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list", employeeService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", employeeService.getByPageActive(page));
+        model.addAttribute("url", "/employee?");
         return "employee/employee/Index";
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("search") String search,
+    public String search(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                         @RequestParam("search") String search,
                          Model model) {
-        model.addAttribute("list", employeeService.search(search));
+        model.addAttribute("list", employeeService.search(page,search));
+        model.addAttribute("url", "/employee?search="+search+"&");
         return "employee/employee/Index";
     }
 
@@ -48,17 +52,17 @@ public class EmployeeController {
     public String detail(@PathVariable("id") String id,
                          Model model) {
         Employee employee = employeeService.getById(Integer.valueOf(id));
-        model.addAttribute("employee", new EmployeeInfoDTO(employee));
+        model.addAttribute("employee", new EmployeeInfo(employee));
         return "employee/employee/Detail";
     }
 
     @PostMapping("/update")
-    public String updateInfo(@Valid @ModelAttribute("employee") EmployeeInfoDTO employeeInfoDTO,
+    public String updateInfo(@Valid @ModelAttribute("employee") EmployeeInfo employeeInfo,
                              BindingResult result) {
         if (result.hasErrors()) {
             return "employee/employee/Detail";
         }
-        Employee employee = employeeService.infoToEntity(employeeInfoDTO);
+        Employee employee = employeeService.infoToEntity(employeeInfo);
         employeeService.update(employee);
         return "redirect:/employee";
     }
@@ -66,18 +70,18 @@ public class EmployeeController {
     @GetMapping("/change_password/{id}")
     public String viewChangePassword(@PathVariable("id") String id,
                                      Model model) {
-        AccountDTO account = new AccountDTO(employeeService.getById(Integer.valueOf(id)));
+        Account account = new Account(employeeService.getById(Integer.valueOf(id)));
         model.addAttribute("account", account);
         return "employee/employee/ChangePassword";
     }
 
     @PostMapping("/change_password")
-    public String updateAccount(@Valid @ModelAttribute("account") AccountDTO accountDTO,
+    public String updateAccount(@Valid @ModelAttribute("account") Account account,
                                 BindingResult result) {
         if (result.hasErrors()) {
             return "employee/employee/ChangePassword";
         }
-        Employee employee = employeeService.accountToEntity(accountDTO);
+        Employee employee = employeeService.accountToEntity(account);
         employeeService.update(employee);
         return "redirect:/employee";
     }

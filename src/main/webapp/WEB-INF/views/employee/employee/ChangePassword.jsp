@@ -13,13 +13,8 @@
 <div class="container my-2">
     <form:form action="/employee/change_password" method="post" modelAttribute="account">
         <div class="mb-3">
-            ID:
-            <form:input path="id" cssClass="form-control" readonly="true"/>
-            <form:errors path="id"/>
-        </div>
-        <div class="mb-3">
             Username:
-            <form:input path="username" cssClass="form-control"/>
+            <form:input path="username" cssClass="form-control" readonly="true"/>
             <form:errors path="username"/>
         </div>
         <div class="mb-3">

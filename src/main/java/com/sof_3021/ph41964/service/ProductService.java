@@ -1,6 +1,7 @@
 package com.sof_3021.ph41964.service;
 
 import com.sof_3021.ph41964.entity.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface ProductService {
 
     List<Product> getAllActive();
 
-    List<Product> search(String search);
+    Page<Product> getByPageActive(Integer page);
+
+    Page<Product> search(Integer page, String search);
 }

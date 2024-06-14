@@ -1,6 +1,6 @@
 package com.sof_3021.ph41964.controller;
 
-import com.sof_3021.ph41964.dto.AccountDTO;
+import com.sof_3021.ph41964.model.Account;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -10,24 +10,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("")
+    @GetMapping("/login")
     public String index(Model model) {
-        model.addAttribute("auth", new AccountDTO());
+        model.addAttribute("auth", new Account());
         return "Login";
     }
 
-    @PostMapping("/enter")
-    public String login(@ModelAttribute("auth") AccountDTO account,
+    @PostMapping("/login/enter")
+    public String login(@ModelAttribute("auth") Account account,
                         RedirectAttributes redirAttr,
                         HttpSession session) {
         Employee employee = employeeService.login(account);
@@ -39,4 +37,9 @@ public class LoginController {
         return "redirect:/login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("auth", null);
+        return "redirect:/login";
+    }
 }

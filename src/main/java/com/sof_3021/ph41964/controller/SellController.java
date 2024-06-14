@@ -5,6 +5,7 @@ import com.sof_3021.ph41964.entity.BillDetail;
 import com.sof_3021.ph41964.entity.Customer;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.entity.ProductDetail;
+import com.sof_3021.ph41964.exception.InsufficientStockException;
 import com.sof_3021.ph41964.service.BillDetailService;
 import com.sof_3021.ph41964.service.BillService;
 import com.sof_3021.ph41964.service.CustomerService;
@@ -125,6 +126,10 @@ public class SellController {
             billDetail.setProductDetail(productDetail);
             billDetail.setQuantity(productDetail.getQuantity());
             billDetail.setStatus(true);
+            productDetailService.setQuantity(productDetail.getId(),productDetail.getQuantity());
+            if(productDetailService.getById(productDetail.getId()).getQuantity()<0){
+                throw new InsufficientStockException("Không thể mua nhiều hơn số lượng sản phẩm trong kho");
+            }
             billDetailService.create(billDetail);
         });
 

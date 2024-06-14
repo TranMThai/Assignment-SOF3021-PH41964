@@ -4,6 +4,9 @@ import com.sof_3021.ph41964.entity.ProductDetail;
 import com.sof_3021.ph41964.repository.ProductDetailRepository;
 import com.sof_3021.ph41964.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +51,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                         || productDetail.getCode().toLowerCase().contains(search.toLowerCase()))
                 .toList();
     }
+    @Override
+    public Page<ProductDetail> search(int page, String search) {
+        Pageable pageable = PageRequest.of(page,10);
+        return productDetailRepository.searchPageActive(search,pageable);
+    }
 
     @Override
     public void addToCart(List<ProductDetail> cart, String id) {
@@ -91,5 +99,18 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         return productDetailRepository.findAll().stream()
                 .filter(ProductDetail::getStatus)
                 .toList();
+    }
+
+    @Override
+    public void setQuantity(int id, int quantity) {
+        ProductDetail productDetail = getById(id);
+        productDetail.setQuantity(productDetail.getQuantity()-quantity);
+        update(productDetail);
+    }
+
+    @Override
+    public Page<ProductDetail> getByPageActive(Integer page) {
+        Pageable pageable = PageRequest.of(page,10);
+        return productDetailRepository.getByPageActive(pageable);
     }
 }

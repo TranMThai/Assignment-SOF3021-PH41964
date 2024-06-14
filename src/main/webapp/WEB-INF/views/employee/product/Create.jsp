@@ -44,10 +44,13 @@
             </c:forEach>
         </div>
         <div>
-            Image: <input type="file" class="form-control" name="image">
+            Image:
+            <input type="file" class="form-control" name="imgs">
+            <input type="file" class="form-control" name="imgs">
+            <input type="file" class="form-control" name="imgs">
         </div>
         <div class="mt-3">
-            <input type="submit" value="Create"/>
+            <input type="submit" class="btn btn-success" value="Create"/>
         </div>
         </table>
     </form:form>

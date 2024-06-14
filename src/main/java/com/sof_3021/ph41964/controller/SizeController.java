@@ -27,15 +27,19 @@ public class SizeController {
     }
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list",sizeService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", sizeService.getByPageActive(page));
+        model.addAttribute("url", "/size?");
         return "employee/size/Index";
     }
 
     @GetMapping("search")
-    public String search(@RequestParam("search") String search,
-                         Model model){
-        model.addAttribute("list",sizeService.search(search));
+    public String search(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                         @RequestParam("search") String search,
+                         Model model) {
+        model.addAttribute("list", sizeService.search(page,search));
+        model.addAttribute("url", "/color?size="+search+"&");
         return "employee/size/Index";
     }
 
@@ -51,7 +55,7 @@ public class SizeController {
     public String detail(@PathVariable("id") String id,
                          Model model){
         model.addAttribute("size",sizeService.getById(Integer.valueOf(id)));
-        return index(model);
+        return index(0,model);
     }
 
     @GetMapping("clear")
@@ -65,7 +69,7 @@ public class SizeController {
                        BindingResult result,
                        Model model){
         if(result.hasErrors()){
-            return index(model);
+            return index(0,model);
         }
         size.setStatus(true);
         sizeService.update(size);

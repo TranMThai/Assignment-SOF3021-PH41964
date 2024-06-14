@@ -42,7 +42,7 @@
 
     <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Heading</h1>
+            <h1 class="offcanvas-title">Menu</h1>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -74,6 +74,9 @@
                 <li class="nav-item">
                     <a class="nav-link fs-4" href="/size">Size</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/logout">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -85,7 +88,7 @@
         <input type="text" class="form-control" name="search">
         <input type="submit" class="btn btn-info px-3" value="Search">
     </form>
-
+    <h2>Bill</h2>
     <table class="table table-striped">
         <thead>
         <tr>

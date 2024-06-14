@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -41,6 +42,7 @@ public class ProductDetail {
     @JoinColumn(name = "idProduct")
     private Product product;
 
+    @Min(value = 0, message = "Không được nhỏ hơn 0")
     private Integer quantity;
 
     private Boolean status;

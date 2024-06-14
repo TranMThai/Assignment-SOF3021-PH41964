@@ -1,9 +1,13 @@
 package com.sof_3021.ph41964.service.impl;
 
 import com.sof_3021.ph41964.entity.Color;
+import com.sof_3021.ph41964.entity.Size;
 import com.sof_3021.ph41964.repository.ColorRepository;
 import com.sof_3021.ph41964.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +58,16 @@ public class ColorServiceImpl implements ColorService {
                 stream()
                 .filter(Color::getStatus)
                 .toList();
+    }
+    @Override
+    public Page<Color> getByPageActive(Integer page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return colorRepository.getByPageActive(pageable);
+    }
+
+    @Override
+    public Page<Color> search(Integer page, String search) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return colorRepository.searchPageActive(search,pageable);
     }
 }

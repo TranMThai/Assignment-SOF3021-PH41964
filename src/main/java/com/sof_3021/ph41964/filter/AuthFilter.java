@@ -14,20 +14,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 
 @Component
 @Order(1)
 public class AuthFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig config) throws ServletException {
-        // Initialization logic if needed
-    }
-
-    @Override
-    public void destroy() {
-        // Cleanup logic if needed
-    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -49,7 +40,7 @@ public class AuthFilter implements Filter {
         }else{
             if(path.startsWith("/bill")||path.startsWith("/bill_detail")){
                 if(!((Employee)session.getAttribute("auth")).getRole()){
-                    response.sendRedirect("/login");
+                    response.sendRedirect("/reject-access");
                     return;
                 }
             }

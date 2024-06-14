@@ -1,11 +1,14 @@
 package com.sof_3021.ph41964.service.impl;
 
-import com.sof_3021.ph41964.dto.AccountDTO;
-import com.sof_3021.ph41964.dto.EmployeeInfoDTO;
+import com.sof_3021.ph41964.model.Account;
+import com.sof_3021.ph41964.model.EmployeeInfo;
 import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.repository.EmployeeRepository;
 import com.sof_3021.ph41964.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee login(AccountDTO account) {
+    public Employee login(Account account) {
         Optional<Employee> opEmployee = employeeRepository.findAll().stream()
                 .filter(em -> em.getUsername().equals(account.getUsername())
                         && em.getPassword().equals(account.getPassword()))
@@ -84,20 +87,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee infoToEntity(EmployeeInfoDTO employeeInfoDTO) {
-        Employee employee = getById(employeeInfoDTO.getId());
-        employee.setCode(employeeInfoDTO.getCode());
-        employee.setName(employeeInfoDTO.getName());
-        employee.setRole(employeeInfoDTO.getRole());
+    public Employee infoToEntity(EmployeeInfo employeeInfo) {
+        Employee employee = getById(employeeInfo.getId());
+        employee.setCode(employeeInfo.getCode());
+        employee.setName(employeeInfo.getName());
+        employee.setRole(employeeInfo.getRole());
         return employee;
     }
 
     @Override
-    public Employee accountToEntity(AccountDTO accountDTO) {
-        Employee employee = getById(accountDTO.getId());
-        employee.setUsername(accountDTO.getUsername());
-        employee.setPassword(accountDTO.getPassword());
+    public Employee accountToEntity(Account account) {
+        Employee employee = getByUsername(account.getUsername());
+        employee.setUsername(account.getUsername());
+        employee.setPassword(account.getPassword());
         return employee;
+    }
+
+    @Override
+    public Page<Employee> getByPageActive(Integer page) {
+        Pageable pageable = PageRequest.of(page,10);
+        return employeeRepository.getByPageActive(pageable);
+    }
+
+    @Override
+    public Page<Employee> search(Integer page, String search) {
+        Pageable pageable = PageRequest.of(page,10);
+        return employeeRepository.searchPageActive(search,pageable);
     }
 
     @Override

@@ -27,15 +27,19 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list", customerService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", customerService.getByPageActive(page));
+        model.addAttribute("url", "/customer?");
         return "employee/customer/Index";
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("search") String search,
+    public String search(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                         @RequestParam("search") String search,
                          Model model) {
-        model.addAttribute("list", customerService.search(search));
+        model.addAttribute("list", customerService.search(page,search));
+        model.addAttribute("url", "/customer?search="+search+"&");
         return "employee/customer/Index";
     }
 
@@ -50,7 +54,7 @@ public class CustomerController {
     public String read(@PathVariable("id") String id,
                          Model model) {
         model.addAttribute("customer", customerService.getById(Integer.valueOf(id)));
-        return index(model);
+        return index(0,model);
     }
 
     @GetMapping("/remove")
@@ -73,7 +77,7 @@ public class CustomerController {
                        BindingResult result,
                        Model model) {
         if(result.hasErrors()){
-            return index(model);
+            return index(0,model);
         }
 
         customer.setStatus(true);

@@ -1,9 +1,13 @@
 package com.sof_3021.ph41964.service.impl;
 
 import com.sof_3021.ph41964.entity.Customer;
+import com.sof_3021.ph41964.entity.Employee;
 import com.sof_3021.ph41964.repository.CustomerRepository;
 import com.sof_3021.ph41964.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,4 +59,17 @@ public class CustomerServiceImpl implements CustomerService {
                         || String.valueOf(customer.getId()).equals(newSearch))
                 .toList();
     }
+
+    @Override
+    public Page<Customer> getByPageActive(Integer page) {
+        Pageable pageable = PageRequest.of(page,10);
+        return customerRepository.getByPageActive(pageable);
+    }
+
+    @Override
+    public Page<Customer> search(Integer page, String search) {
+        Pageable pageable = PageRequest.of(page,10);
+        return customerRepository.searchPageActive(search,pageable);
+    }
+
 }

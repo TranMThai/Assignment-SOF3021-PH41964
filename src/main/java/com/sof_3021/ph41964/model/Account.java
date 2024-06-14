@@ -1,8 +1,7 @@
-package com.sof_3021.ph41964.dto;
+package com.sof_3021.ph41964.model;
 
 import com.sof_3021.ph41964.entity.Employee;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountDTO {
-
-    @NotNull(message = "Không được trống")
-    private Integer id;
+public class Account {
 
     @NotBlank(message = "Không được trống")
     private String username;
@@ -21,8 +17,7 @@ public class AccountDTO {
     @NotBlank(message = "Không được trống")
     private String password;
 
-    public AccountDTO(Employee employee) {
-        this.id = employee.getId();
+    public Account(Employee employee) {
         this.username = employee.getUsername();
         this.password = employee.getPassword();
     }

@@ -22,25 +22,29 @@ public class ColorController {
     ColorService colorService;
 
     @ModelAttribute("color")
-    public Color getColor(){
+    public Color getColor() {
         return new Color();
     }
 
     @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("list",colorService.getAllActive());
+    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                        Model model) {
+        model.addAttribute("list", colorService.getByPageActive(page));
+        model.addAttribute("url", "/color?");
         return "employee/color/Index";
     }
 
     @GetMapping("search")
-    public String search(@RequestParam("search") String search,
-                         Model model){
-        model.addAttribute("list",colorService.search(search));
+    public String search(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                         @RequestParam("search") String search,
+                         Model model) {
+        model.addAttribute("list", colorService.search(page,search));
+        model.addAttribute("url", "/color?search="+search+"&");
         return "employee/color/Index";
     }
 
     @GetMapping("remove")
-    public String remove(@RequestParam("id") String id){
+    public String remove(@RequestParam("id") String id) {
         Color color = colorService.getById(Integer.valueOf(id));
         color.setStatus(false);
         colorService.update(color);
@@ -49,23 +53,23 @@ public class ColorController {
 
     @GetMapping("detail/{id}")
     public String detail(@PathVariable("id") String id,
-                       Model model){
-        model.addAttribute("color",colorService.getById(Integer.valueOf(id)));
-        return index(model);
+                         Model model) {
+        model.addAttribute("color", colorService.getById(Integer.valueOf(id)));
+        return index(0,model);
     }
 
     @GetMapping("clear")
-    public String clear(Model model){
-        model.addAttribute("color",new Color());
+    public String clear(Model model) {
+        model.addAttribute("color", new Color());
         return "redirect:/color";
     }
 
     @PostMapping("save")
     public String save(@Valid @ModelAttribute("color") Color color,
                        BindingResult result,
-                       Model model){
-        if(result.hasErrors()){
-            return index(model);
+                       Model model) {
+        if (result.hasErrors()) {
+            return index(0,model);
         }
         color.setStatus(true);
         colorService.update(color);
